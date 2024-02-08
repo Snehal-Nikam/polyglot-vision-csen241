@@ -9,19 +9,19 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
-resource "aws_iam_role" "role1-s3Full-congitoReadOnly" {
-  name               = "role1-s3Full-congitoReadOnly"
+resource "aws_iam_role" "backend-role" {
+  name               = "backend-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
 
-resource "aws_iam_role" "role2-s3Full" {
-  name               = "role2-s3Full"
+resource "aws_iam_role" "subtitle-api-role" {
+  name               = "subtitle-api-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
 
-resource "aws_iam_policy" "policy1-s3Full-cognitoReadOnly" {
-  name        = "policy1-s3Full-cognitoReadOnly"
-  description = "A policy for role1-s3Full-cognitoReadOnly"
+resource "aws_iam_policy" "policy-backend-role" {
+  name        = "policy-backend-role"
+  description = "A policy for backend-role"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -39,9 +39,9 @@ resource "aws_iam_policy" "policy1-s3Full-cognitoReadOnly" {
 
 }
 
-resource "aws_iam_policy" "policy2-s3Full" {
+resource "aws_iam_policy" "subtitle-api-role-policy" {
   name        = "policy2-s3Full"
-  description = "A policy for role2-s3Full"
+  description = "A policy for subtitle-api-role"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -56,12 +56,12 @@ resource "aws_iam_policy" "policy2-s3Full" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "role1-s3Full-congitoReadOnly-policy-attachment" {
-  role       = aws_iam_role.role1-s3Full-congitoReadOnly.name
-  policy_arn = aws_iam_policy.policy1-s3Full-cognitoReadOnly.arn
+resource "aws_iam_role_policy_attachment" "backend-role-policy-attachment" {
+  role       = aws_iam_role.backend-role.name
+  policy_arn = aws_iam_policy.policy-backend-role.arn
 }
 
-resource "aws_iam_role_policy_attachment" "role2-s3Full-policy-attachment" {
-  role       = aws_iam_role.role2-s3Full.name
-  policy_arn = aws_iam_policy.policy2-s3Full.arn
+resource "aws_iam_role_policy_attachment" "subtitle-api-role-policy-attachment" {
+  role       = aws_iam_role.subtitle-api-role.name
+  policy_arn = aws_iam_policy.subtitle-api-role-policy.arn
 }
