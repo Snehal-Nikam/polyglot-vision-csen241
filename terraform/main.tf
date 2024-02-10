@@ -10,6 +10,10 @@ provider "aws" {
   region = "us-west-2"
 }
 
-module "main" {
+module "security" {
   source = "./Security"
+}
+
+module "S3" {
+  source = "./S3"
 }
