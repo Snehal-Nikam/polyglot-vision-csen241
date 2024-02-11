@@ -1,3 +1,3 @@
-resource "aws_s3_bucket" "cc241-transcribe-output-bucket" {
-  bucket = "cc241-transcribe-output-bucket"
+resource "aws_s3_bucket" "polyglot-transcribe-output-bucket" {
+  bucket = "polyglot-transcribe-output-bucket"
 }
