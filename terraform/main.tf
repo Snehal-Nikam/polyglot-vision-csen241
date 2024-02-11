@@ -17,3 +17,7 @@ module "security" {
 module "S3" {
   source = "./S3"
 }
+
+module "cognito" {
+  source = "./Cognito"
+}
