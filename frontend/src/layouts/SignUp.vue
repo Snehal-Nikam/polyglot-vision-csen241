@@ -4,7 +4,7 @@
       <q-card>
         <img class="avatar" src="tubarao.jpg" />
         <q-card-section>
-          <q-form @submit="register" class="q-gutter-md q-pa-sm">
+          <q-form @submit="Register" class="q-gutter-md q-pa-sm">
             <q-input
               v-model="user.name"
               label="Your name"
@@ -30,7 +30,7 @@
             <q-input
               type="password"
               v-model="confpass"
-              label="confirm password"
+              label="Confirm Password"
               lazy-rules
               :rules="[
                 (val) => (val && val.length > 0) || 'Blank field',
@@ -76,7 +76,7 @@ export default {
         this.$router.push('/')
       } catch (err) {
         this.$q.notify({
-          message: 'Error processing data',
+          message: 'Erro ao processar dados',
           color: 'red'
         })
       } finally {
