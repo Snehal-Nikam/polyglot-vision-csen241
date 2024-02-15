@@ -25,6 +25,7 @@ resource "aws_s3_bucket_policy" "bucket-policy" {
   policy = data.aws_iam_policy_document.bucket-policy.json
   depends_on=[data.aws_iam_policy_document.bucket-policy]
 }
+
 resource "aws_s3_bucket_acl" "cc241-input-videos-bucket" {
   bucket = aws_s3_bucket.polyglot-input-videos-bucket.id
   acl    = "public-read"
@@ -48,7 +49,6 @@ resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership" {
   depends_on = [aws_s3_bucket_public_access_block.example]
 }
 
-
 data "aws_iam_policy_document" "bucket-policy" {
   statement {
     sid       = "PublicRead"
@@ -60,7 +60,8 @@ data "aws_iam_policy_document" "bucket-policy" {
     actions = [
       "s3:GetObject",
       "s3:ListBucket",
-      "s3:GetObjectVersion"
+      "s3:GetObjectVersion",
+      "s3:PutBucketNotification"
     ]
     resources = [
        aws_s3_bucket.polyglot-input-videos-bucket.arn,
@@ -70,3 +71,4 @@ data "aws_iam_policy_document" "bucket-policy" {
   }
   depends_on = [aws_s3_bucket_public_access_block.example]
 }
+
