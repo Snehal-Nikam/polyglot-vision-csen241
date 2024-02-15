@@ -10,14 +10,14 @@ provider "aws" {
   region = "us-west-2"
 }
 
-module "security" {
-  source = "./Security"
-}
-
-module "S3" {
-  source = "./S3"
-}
-
 module "cognito" {
-  source = "./Cognito"
+  source = "./cognito"
+  CALLBACK_URLS = ""
+  COGNITO_USER_POOL_CLIENT_NAME = ""
+  COGNITO_USER_POOL_NAME = ""
+  LOGOUT_URLS = ""
+}
+
+module "lambda" {
+  source = "./lambda"
 }
