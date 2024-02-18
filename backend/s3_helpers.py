@@ -18,7 +18,7 @@ def upload_to_s3(user_id, file_name, file_stream, s3_bucket, prefix=None):
         s3_key = f'{prefix}/{file_id}.mp4'
 
         # upload the file to s3
-        s3_client = boto3.client('s3', region_name='us-east-1')
+        s3_client = boto3.client('s3', region_name='us-west-2')
         s3_client.upload_fileobj(file_stream, s3_bucket, s3_key)
         return file_id
     
