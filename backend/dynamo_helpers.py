@@ -32,7 +32,7 @@ def get_records_by_key(table_name, key, value):
         return False
 
 # This function saves an item to a DynamoDB table.
-def save_record(table_name, record, key, value):
+def save_record_to_dynamodb(table_name, record, key, value):
     
     dynamo_client = boto3.client('dynamodb', region_name='us-west-2')
     try:
