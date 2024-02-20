@@ -1,9 +1,9 @@
 {
-  "name": "legendastubarao",
+  "name": "polyglotvision",
   "version": "0.0.1",
-  "description": "cloud-computing-videos-subtitle",
-  "productName": "legendas Zebarão",
-  "author": "hernany <hernanytec777@gmail.com>",
+  "description": "polyglot vision",
+  "appName": "Polyglot Vision",
+  "author": "Polyglot",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
