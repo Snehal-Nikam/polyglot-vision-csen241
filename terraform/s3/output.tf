@@ -7,5 +7,5 @@ output "polyglot-input-videos-bucket" {
 }
 
 output "polyglot-translation-bucket" {
-  value = aws_s3_bucket.polyglot-translation-bucket-cc241.id
+  value = aws_s3_bucket.polyglot-translation-bucket.id
 }
