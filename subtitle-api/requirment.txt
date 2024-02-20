@@ -1,0 +1,7 @@
+moviepy
+flask
+flask-restful
+awscli
+boto3
+flask-cors
+python-dotenv
