@@ -10,14 +10,15 @@ provider "aws" {
   region = "us-west-2"
 }
 
-module "cognito" {
-  source = "./cognito"
-  CALLBACK_URLS = ""
-  COGNITO_USER_POOL_CLIENT_NAME = ""
-  COGNITO_USER_POOL_NAME = ""
-  LOGOUT_URLS = ""
-}
-
 module "lambda" {
   source = "./lambda"
 }
+
+module "cognito" {
+  source = "./cognito"
+  CALLBACK_URLS = ["https://0.0.0.0:8000"] #TODO : Change
+  COGNITO_USER_POOL_CLIENT_NAME = "ployglot-vision"
+  COGNITO_USER_POOL_NAME = "polyglot-user-pool"
+  LOGOUT_URLS = ["https://0.0.0.0:8000"] #TODO : Change
+}
+
