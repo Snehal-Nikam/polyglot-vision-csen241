@@ -14,7 +14,7 @@ def create_uri(bucket_name, file_name):
 def lambda_handler(event, context):
     transcribe = boto3.client('transcribe')
 
-    if event:
+    if 'Records' in event:
         file_obj = event['Records'][0]
         bucket_name = str(file_obj['s3']['bucket']['name'])
         file_name = str(file_obj['s3']['object']['key'])
@@ -34,7 +34,23 @@ def lambda_handler(event, context):
             },
             OutputBucketName=TRANSCRIBE_BUCKET
         )
-
+    else:
+        bucket_name = event['bucket']
+        folder_name = event['folder']
+        s3 = boto3.resource('s3')
+        bucket = s3.Bucket(bucket_name)
+        for obj in bucket.objects.filter(Prefix=folder_name):
+            if obj.key.endswith(('.mp4', '.flac', '.wav', '.mp3')):
+                print('started transcription for {}'.format(obj.key))
+                transcribe.start_transcription_job(
+                    TranscriptionJobName=obj.key,
+                    LanguageCode='en-US',
+                    MediaFormat=obj.key.split('.')[-1],
+                    Media={
+                        'MediaFileUri': 's3://{}/{}'.format(bucket_name, obj.key)
+                    },
+                    OutputBucketName=TRANSCRIBE_BUCKET
+                )
     return {
         'statusCode': 200,
         'body': json.dumps('Transcribe job started!')
