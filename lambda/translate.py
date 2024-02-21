@@ -65,32 +65,36 @@ def lambda_handler(event, _):
     s3_resource = boto3.resource('s3')
     translate_client = boto3.client('translate')
 
-    if event:
+    if 'Records' in event:
         record = event['Records'][0]['s3']
         bucket = record['bucket']['name']
         key = record['object']['key']
+    else:
+        bucket = event['bucket']
+        key = event['key']
 
-        content = s3_resource.Object(bucket, key).get()['Body'].read().decode('utf-8')
-        transcription = json.loads(content)
-        vtt_content = convert_json_to_vtt(transcription)
+    content = s3_resource.Object(bucket, key).get()['Body'].read().decode('utf-8')
+    transcription = json.loads(content)
+    vtt_content = convert_json_to_vtt(transcription)
 
-        translated_chunks = []
-        for chunk in split_into_chunks(vtt_content):
-            print('Translating chunk')
-            result = translate_client.translate_text(
-                Text=chunk,
-                SourceLanguageCode='en',
-                TargetLanguageCode='hi'
-            )
-            translated_chunks.append(result['TranslatedText'])
-        translated_chunks = '\n'.join(translated_chunks)
-        translated_chunks = translated_chunks.strip().split('\n')
-        translated_chunks = '\n'.join([correct_timestamp_format(l) for l in translated_chunks])
+    translated_chunks = []
+    for chunk in split_into_chunks(vtt_content):
+        print('Translating chunk')
+        result = translate_client.translate_text(
+            Text=chunk,
+            SourceLanguageCode='en',
+            TargetLanguageCode='hi'
+        )
+        translated_chunks.append(result['TranslatedText'])
+    translated_chunks = '\n'.join(translated_chunks)
+    translated_chunks = translated_chunks.strip().split('\n')
+    translated_chunks = '\n'.join([correct_timestamp_format(l) for l in translated_chunks])
 
-        base_file_name = os.path.splitext(os.path.basename(key))[0]
+    base_file_name = os.path.splitext(os.path.basename(key))[0]
 
-        s3_resource.Object(TRANSLATION_BUCKET, f'language-english/{base_file_name}.vtt').put(Body=vtt_content)
-        s3_resource.Object(TRANSLATION_BUCKET, f'language-hindi/{base_file_name}.vtt').put(Body=translated_chunks)
+    s3_resource.Object(TRANSLATION_BUCKET, f'language-english/{base_file_name}.vtt').put(Body=vtt_content)
+    s3_resource.Object(TRANSLATION_BUCKET, f'language-hindi/{base_file_name}.vtt').put(Body=translated_chunks)
+
 
     return {
         'statusCode': 200,
