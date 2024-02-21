@@ -9,16 +9,24 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
-resource "aws_iam_role" "lambda-role" {
-  name               = "lambda-role"
-  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-}
 resource "aws_iam_role" "backend-role" {
   name               = "backend-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
 resource "aws_iam_role" "subtitle-api-role" {
   name               = "subtitle-api-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+}
+resource "aws_iam_role" "transcribe-lambda-role" {
+  name               = "transcribe-lambda-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+}
+resource "aws_iam_role" "translate-lambda-role" {
+  name               = "translate-lambda-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+}
+resource "aws_iam_role" "subtitles-lambda-role" {
+  name               = "subtitles-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
 
@@ -57,9 +65,9 @@ resource "aws_iam_policy" "policy-subtitle-api-role" {
     ]
   })
 }
-resource "aws_iam_policy" "policy-lambda-role" {
-  name        = "policy-lambda-role"
-  description = "A policy for lambda-role"
+resource "aws_iam_policy" "policy-transcribe-lambda-role" {
+  name        = "policy-transcribe-lambda-role"
+  description = "A policy for transcribe-lambda-role"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -73,7 +81,40 @@ resource "aws_iam_policy" "policy-lambda-role" {
       }
     ]
   })
-
+}
+resource "aws_iam_policy" "policy-translate-lambda-role" {
+  name        = "policy-translate-lambda-role"
+  description = "A policy for translate-lambda-role"
+  policy      = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "s3:*",
+          "translate:*"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  })
+}
+resource "aws_iam_policy" "policy-subtitles-lambda-role" {
+  name        = "policy-subtitles-lambda-role"
+  description = "A policy for subtitles-lambda-role"
+  policy      = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "s3:*",
+          "ec2:*"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "attachment-backend-role-policy" {
@@ -84,7 +125,15 @@ resource "aws_iam_role_policy_attachment" "attachment-subtitle-api-role-policy" 
   role       = aws_iam_role.subtitle-api-role.name
   policy_arn = aws_iam_policy.policy-subtitle-api-role.arn
 }
-resource "aws_iam_role_policy_attachment" "attachment-lambda-policy" {
-  role       = aws_iam_role.lambda-role.name
-  policy_arn = aws_iam_policy.policy-lambda-role.arn
+resource "aws_iam_role_policy_attachment" "attachment-transcribe-lambda-policy" {
+  role       = aws_iam_role.transcribe-lambda-role.name
+  policy_arn = aws_iam_policy.policy-transcribe-lambda-role.arn
+}
+resource "aws_iam_role_policy_attachment" "attachment-translate-lambda-policy" {
+  role       = aws_iam_role.translate-lambda-role.name
+  policy_arn = aws_iam_policy.policy-translate-lambda-role.arn
+}
+resource "aws_iam_role_policy_attachment" "attachment-subtitles-lambda-policy" {
+  role       = aws_iam_role.subtitles-lambda-role.name
+  policy_arn = aws_iam_policy.policy-subtitles-lambda-role.arn
 }

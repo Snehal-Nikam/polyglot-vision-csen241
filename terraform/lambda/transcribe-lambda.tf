@@ -14,7 +14,7 @@ data archive_file transcribe-lambda {
 
 resource "aws_lambda_function" "transcribe-lambda" {
   function_name = "transcribe-lambda"
-  role          = module.security.lambda-role
+  role          = module.security.transcribe-lambda-role
   filename      = data.archive_file.transcribe-lambda.output_path
   runtime       = "python3.8"
   handler       = "transcribe.handler"
@@ -26,7 +26,7 @@ resource "aws_lambda_function" "transcribe-lambda" {
 }
 
 #trigger for lambda
-resource "aws_lambda_permission" "allow_bucket" {
+resource "aws_lambda_permission" "allow_bucket_input_transcribe" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.transcribe-lambda.function_name
@@ -35,14 +35,14 @@ resource "aws_lambda_permission" "allow_bucket" {
 }
 
 
-resource "null_resource" "wait_for_lambda_trigger" {
-  depends_on   = [aws_lambda_permission.allow_bucket]
-  provisioner "local-exec" {
-    command = "sleep 3m"
-  }
-}
+#resource "null_resource" "wait_for_lambda_trigger" {
+#  depends_on   = [aws_lambda_permission.allow_bucket]
+#  provisioner "local-exec" {
+#    command = "sleep 3m"
+#  }
+#}
 
-resource "aws_s3_bucket_notification" "bucket_notification" {
+resource "aws_s3_bucket_notification" "bucket_notification-transcribe-lambda" {
   bucket = module.s3.polyglot-input-videos-bucket
 
   lambda_function {
@@ -51,6 +51,6 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     filter_prefix       = "original-video/"
     filter_suffix       = ".mp4"
   }
-  depends_on = [null_resource.wait_for_lambda_trigger, aws_lambda_permission.allow_bucket]
+  depends_on = [aws_lambda_function.transcribe-lambda, aws_lambda_permission.allow_bucket_input_transcribe]
 }
 
