@@ -29,3 +29,12 @@
 5. TRANSLATE_BUCKET: polyglot-translation-bucket-cc241
 6. VIDEOS_BUCKET: polyglot-input-videos-bucket
 7. SUBTITLE_API: URL of subtitles API.
+
+### Final-lambda
+
+1. This lambda is responsible for storing the translated and subtitled video information and informing the user about the job completion.
+2. The lambda execution role requires following permissions. AmazonDynamoDBFullAccess, AmazonS3ReadOnlyAccess and AmazonSESFullAccess
+3. Create a S3 trigger to polyglot-input-videos-bucket with info as prefix and .json as suffix.
+4. The following environment variables need to be created.
+    VIDEOS_TABLE: Dynamo DB table to store the info
+    SOURCE_EMAIL: Source email from which the notification needs to be sent.
