@@ -2,7 +2,7 @@
   "name": "polyglotvision",
   "version": "0.0.1",
   "description": "polyglot vision",
-  "appName": "Polyglot Vision",
+  "productName": "Polyglot Vision",
   "author": "Polyglot",
   "private": true,
   "scripts": {
