@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-west-1"  # Replace with your desired region
-}
-
 resource "aws_dynamodb_table" "videos" {
   name           = "videos-table"
   billing_mode   = "PAY_PER_REQUEST"
@@ -36,9 +32,4 @@ resource "aws_dynamodb_table" "videos" {
     enabled = true
   }
 
-  tags = {
-    Name        = "VideosTable"
-    Environment = "Production"
-  }
-  
 }
