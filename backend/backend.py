@@ -6,8 +6,8 @@ from dynamo_helpers import save_record_to_dynamodb, get_records_by_key
 from cognito_user_auth import is_valid_user
 import json
 
-from dotenv import load_doatenv
-load_dotenv()
+from dotenv import main
+main.load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
