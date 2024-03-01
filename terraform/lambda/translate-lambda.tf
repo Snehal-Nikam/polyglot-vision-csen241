@@ -9,7 +9,7 @@ resource "aws_lambda_function" "translate-lambda" {
   role          = module.security.translate-lambda-role
   filename      = data.archive_file.translate-lambda.output_path
   runtime       = "python3.8"
-  handler       = "translate.handler"
+  handler       = "translate.lambda_handler"
   environment {
     variables = {
       "TRANSLATE_BUCKET" = module.s3.polyglot-translation-bucket

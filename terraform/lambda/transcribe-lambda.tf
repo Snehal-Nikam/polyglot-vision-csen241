@@ -17,7 +17,7 @@ resource "aws_lambda_function" "transcribe-lambda" {
   role          = module.security.transcribe-lambda-role
   filename      = data.archive_file.transcribe-lambda.output_path
   runtime       = "python3.8"
-  handler       = "transcribe.handler"
+  handler       = "transcribe.lambda_handler"
   environment {
     variables = {
       "TRANSCRIBE_BUCKET" = module.s3.polyglot-transcribe-output-bucket
