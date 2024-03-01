@@ -14,7 +14,7 @@ resource "aws_lambda_function" "subtitles-lambda" {
     variables = {
       "TRANSLATE_BUCKET" = module.s3.polyglot-translation-bucket,
       "VIDEOS_BUCKET"    = module.s3.polyglot-input-videos-bucket,
-      "SUBTITLE_API"     = "http://127.0.0.0" #TODO : add the url.
+      "SUBTITLE_API"     = "https://app.polyglotvision.online/video"
     }
   }
 }
