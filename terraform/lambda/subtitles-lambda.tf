@@ -9,7 +9,7 @@ resource "aws_lambda_function" "subtitles-lambda" {
   role          = module.security.subtitle-lambda-role
   filename      = data.archive_file.subtitles-lambda.output_path
   runtime       = "python3.8"
-  handler       = "subtitles.handler"
+  handler       = "subtitles.lambda_handler"
   environment {
     variables = {
       "TRANSLATE_BUCKET" = module.s3.polyglot-translation-bucket,
