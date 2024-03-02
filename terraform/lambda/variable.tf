@@ -1,0 +1,1 @@
+variable "COGNITO_USR_POOL_ARN" {}

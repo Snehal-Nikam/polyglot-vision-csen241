@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "polyglot-translation-bucket" {
-  bucket = "polyglot-translation-bucket"
+  bucket = "polyglot-translation-bucket-us-west-2"
 }
 
 resource "aws_s3_object" "language-english" {

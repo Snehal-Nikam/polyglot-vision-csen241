@@ -31,7 +31,7 @@ def send_videos_to_s3():
     if not is_valid_user(USER_POOL_ID, user_id):
         return jsonify("UserNotFound"), 401
 
-    video_id = upload_to_s3(user_id, file_name, file_stream, s3_bucket, 'original')
+    video_id = upload_to_s3(user_id, file_name, file_stream, s3_bucket, 'original-video')
     video_info = {
         "video_id": {"S": video_id},
         "user_id": {"S": user_id},

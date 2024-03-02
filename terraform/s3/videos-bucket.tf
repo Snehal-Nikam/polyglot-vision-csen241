@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "polyglot-input-videos-bucket" {
-  bucket = "polyglot-input-videos-bucket"
+  bucket = "polyglot-input-videos-bucket-us-west-2"
 }
 
 resource "aws_s3_object" "original-video" {

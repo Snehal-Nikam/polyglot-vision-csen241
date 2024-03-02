@@ -12,13 +12,7 @@ provider "aws" {
 
 module "lambda" {
   source = "./lambda"
+  COGNITO_USR_POOL_ARN = ""
 }
 
-module "cognito" {
-  source = "./cognito"
-  CALLBACK_URLS = ["https://0.0.0.0:8000"] #TODO : Change
-  COGNITO_USER_POOL_CLIENT_NAME = "ployglot-vision"
-  COGNITO_USER_POOL_NAME = "polyglot-user-pool"
-  LOGOUT_URLS = ["https://0.0.0.0:8000"] #TODO : Change
-}
 

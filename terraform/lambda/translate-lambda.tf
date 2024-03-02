@@ -29,7 +29,7 @@ resource "aws_s3_bucket_notification" "bucket_notification_translate-lambda" {
   bucket = module.s3.polyglot-transcribe-output-bucket
 
   lambda_function {
-    lambda_function_arn = aws_lambda_function.subtitles-lambda.arn
+    lambda_function_arn = aws_lambda_function.translate-lambda.arn
     events              = ["s3:ObjectCreated:*"]
     filter_suffix       = ".json"
   }
