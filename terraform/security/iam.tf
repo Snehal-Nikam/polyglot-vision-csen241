@@ -29,6 +29,10 @@ resource "aws_iam_role" "subtitles-lambda-role" {
   name               = "subtitles-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
+resource "aws_iam_role" "pre-signup-lambda-role" {
+  name               = "pre-signup-lambda-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+}
 
 resource "aws_iam_policy" "policy-backend-role" {
   name        = "policy-backend-role"
@@ -78,6 +82,15 @@ resource "aws_iam_policy" "policy-transcribe-lambda-role" {
         ],
         "Effect": "Allow",
         "Resource": "*"
+      },
+      {
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:logs:*:*:*"
       }
     ]
   })
@@ -95,6 +108,15 @@ resource "aws_iam_policy" "policy-translate-lambda-role" {
         ],
         "Effect": "Allow",
         "Resource": "*"
+      },
+      {
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:logs:*:*:*"
       }
     ]
   })
@@ -106,12 +128,21 @@ resource "aws_iam_policy" "policy-subtitles-lambda-role" {
     "Version": "2012-10-17",
     "Statement": [
       {
-        "Action": [
+        "Action" : [
           "s3:*",
           "ec2:*"
         ],
+        "Effect" : "Allow",
+        "Resource" : "*"
+      },
+      {
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
         "Effect": "Allow",
-        "Resource": "*"
+        "Resource": "arn:aws:logs:*:*:*"
       }
     ]
   })
@@ -136,4 +167,11 @@ resource "aws_iam_role_policy_attachment" "attachment-translate-lambda-policy" {
 resource "aws_iam_role_policy_attachment" "attachment-subtitles-lambda-policy" {
   role       = aws_iam_role.subtitles-lambda-role.name
   policy_arn = aws_iam_policy.policy-subtitles-lambda-role.arn
+}
+
+
+resource "aws_iam_policy_attachment" "pre-signup-lambda-role" {
+  name       = "example_lambda_exec_policy_attach"
+  roles      = [aws_iam_role.pre-signup-lambda-role.name]
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }

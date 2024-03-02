@@ -34,21 +34,13 @@ resource "aws_lambda_permission" "allow_bucket_input_transcribe" {
   source_arn    = "arn:aws:s3:::${module.s3.polyglot-input-videos-bucket}"
 }
 
-
-#resource "null_resource" "wait_for_lambda_trigger" {
-#  depends_on   = [aws_lambda_permission.allow_bucket]
-#  provisioner "local-exec" {
-#    command = "sleep 3m"
-#  }
-#}
-
 resource "aws_s3_bucket_notification" "bucket_notification-transcribe-lambda" {
   bucket = module.s3.polyglot-input-videos-bucket
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.transcribe-lambda.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "original/"
+    filter_prefix       = "original-video/"
     filter_suffix       = ".mp4"
   }
   depends_on = [aws_lambda_function.transcribe-lambda, aws_lambda_permission.allow_bucket_input_transcribe]

@@ -1,5 +1,5 @@
 import os
-import flask_cors as CORS
+from flask_cors import CORS
 from flask import Flask, jsonify, request, Response
 from subtitle import *
 import json
