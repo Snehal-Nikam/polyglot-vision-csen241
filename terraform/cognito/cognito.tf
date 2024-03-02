@@ -1,4 +1,3 @@
-
 resource "aws_cognito_user_pool" "polyglot" {
   mfa_configuration = "OFF"
   name              = var.COGNITO_USER_POOL_NAME
@@ -42,6 +41,7 @@ resource "aws_cognito_user_pool" "polyglot" {
       max_length = "2048"
       min_length = "0"
     }
+
   }
 
   username_configuration {
@@ -51,10 +51,13 @@ resource "aws_cognito_user_pool" "polyglot" {
   verification_message_template {
     default_email_option = "CONFIRM_WITH_CODE"
   }
+
+  lambda_config {
+    pre_sign_up = "arn:aws:lambda:us-west-2:${var.ACCOUNT_ID}:function:${var.AUTO_APPROVE_LAMBDA}"
+  }
 }
 
 resource "aws_cognito_user_pool_domain" "cognito_domain" {
   domain       = "polyglot"
   user_pool_id = aws_cognito_user_pool.polyglot.id
 }
-

@@ -33,3 +33,7 @@ output "subtitle-api-sg" {
 output "frontend-sg" {
   value = aws_security_group.frontend-sg.arn
 }
+
+output "pre-signup-lambda-role" {
+  value = aws_iam_role.pre-signup-lambda-role.arn
+}
