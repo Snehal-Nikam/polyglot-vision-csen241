@@ -18,6 +18,10 @@ output "subtitle-lambda-role" {
   value = aws_iam_role.subtitles-lambda-role.arn
 }
 
+output "final-lambda-role" {
+  value = aws_iam_role.final-lambda-role.arn
+}
+
 output "lambda-subtitle-sg" {
   value = aws_security_group.lambda-subtitle-sg.arn
 }
