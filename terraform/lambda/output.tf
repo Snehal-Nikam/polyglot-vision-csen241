@@ -9,3 +9,7 @@ output "transcribe-lambda-arn" {
 output "translate-lambda-arn" {
   value = aws_lambda_function.translate-lambda.arn
 }
+
+output "final-lambda-arn" {
+  value = aws_lambda_function.final-lambda.arn
+}
