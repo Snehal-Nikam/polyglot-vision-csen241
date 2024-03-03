@@ -165,7 +165,7 @@ resource "aws_iam_policy" "policy-final-lambda-role" {
           "s3:List*",
           "s3:Describe*",
           "s3-object-lambda:Get*",
-          "s3-object-lambda:List*"
+          "s3-object-lambda:List*",
           "dynamodb:*"
         ],
         "Effect" : "Allow",
