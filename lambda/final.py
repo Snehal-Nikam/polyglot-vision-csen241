@@ -12,14 +12,15 @@ def create_object_url(bucket_name, file_name):
 
 def get_video_info_from_s3(event, s3_client):
     file_obj = event['Records'][0]
-    bucket_name = file_obj['s3']['bucket']['name']
-    file_name = file_obj['s3']['object']['key']
+    bucket_name = str(file_obj['s3']['bucket']['name'])
+    file_name = str(file_obj['s3']['object']['key'])
     content_object = s3_client.Object(bucket_name, file_name)
     file_content = content_object.get()['Body'].read().decode('utf-8')
-    return json.loads(file_content), bucket_name, file_name
+    return file_content, bucket_name, file_name
 
 
 def update_video_info_in_dynamo(video_id, video_uri, info, dynamo_client):
+    print("Uploading the item in db.....")
     updated_video = dynamo_client.update_item(
         TableName=VIDEOS_TABLE,
         Key={"video_id": {"S": video_id}},
@@ -64,15 +65,16 @@ def lambda_handler(event, context):
     ses_client = boto3.client('ses')
 
     if event:
-        info, bucket_name, file_name = get_video_info_from_s3(event, s3_client)
+        file_content, bucket_name, file_name = get_video_info_from_s3(event, s3_client)
+        info = json.loads(file_content)
         video_id = info['video_id']
-        video_key = f'/subtitled/{video_id}.mp4'
+        video_key = f'/subtitled-video/{video_id}.mp4'
         video_uri = create_object_url(bucket_name, video_key)
-
+        print("Uploading video info into dynamo db....", video_id)
         updated_video = update_video_info_in_dynamo(video_id, video_uri, info, dynamo_client)
-
         video_name = updated_video['video_name']['S']
         to_email = updated_video['user_email']['S']
+        print("Sending email to user....")
 
         send_translation_notification(video_name, to_email, ses_client)
 
