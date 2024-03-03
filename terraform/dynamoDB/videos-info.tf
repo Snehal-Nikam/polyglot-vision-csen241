@@ -1,5 +1,5 @@
-resource "aws_dynamodb_table" "videos" {
-  name           = "videos-table"
+resource "aws_dynamodb_table" "videos-info" {
+  name           = "videos-info"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "video_id"
   attribute {
