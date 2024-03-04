@@ -2,17 +2,17 @@ import json
 import os
 from urllib import request
 
-VIDEO_BUCKET = os.getenv('VIDEO_BUCKET')
+VIDEOS_BUCKET = os.getenv('VIDEOS_BUCKET')
 TRANSLATE_BUCKET = os.getenv('TRANSLATE_BUCKET')
 SUBTITLE_API = os.getenv('SUBTITLE_API')
 
 def construct_paths(video_id):
     return {
-        'original_video': f'{VIDEO_BUCKET}/original/{video_id}.mp4',
+        'original_video': f'{VIDEOS_BUCKET}/original/{video_id}.mp4',
         'transcription': f'{TRANSLATE_BUCKET}/language-english/{video_id}.vtt',
         'translation': f'{TRANSLATE_BUCKET}/language-hindi/{video_id}.vtt',
-        'subtitled_video': f'{VIDEO_BUCKET}/subtitled-video/{video_id}.mp4',
-        'job_info': f'{VIDEO_BUCKET}/info/{video_id}.json'
+        'subtitled_video': f'{VIDEOS_BUCKET}/subtitled-video/{video_id}.mp4',
+        'job_info': f'{VIDEOS_BUCKET}/info/{video_id}.json'
     }
 
 def send_subtitle_request(data):
