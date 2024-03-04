@@ -16,7 +16,7 @@ def construct_paths(video_id):
     }
 
 def send_subtitle_request(data):
-    url = f'http://{SUBTITLE_API}:8080/video'
+    url = f'{SUBTITLE_API}/video'
     headers = {
         'Content-Type': 'application/json; charset=utf-8',
         'Content-Length': str(len(data))
