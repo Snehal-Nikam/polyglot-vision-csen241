@@ -10,7 +10,6 @@ resource "aws_lambda_function" "pre-signup-lambda" {
   filename      = data.archive_file.pre-signup-lambda.output_path
   runtime       = "python3.8"
   handler       = "pre-signup.lambda_handler"
-  depends_on = [module.security]
 }
 
 module "cognito" {

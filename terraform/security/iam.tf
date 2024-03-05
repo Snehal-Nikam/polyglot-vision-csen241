@@ -184,11 +184,9 @@ resource "aws_iam_policy" "policy-final-lambda-role" {
     ]
   })
 }
-
 resource "aws_iam_role_policy_attachment" "attachment-backend-role-policy" {
   role       = aws_iam_role.backend-role.name
   policy_arn = aws_iam_policy.policy-backend-role.arn
-  depends_on = [aws_iam_policy.policy-backend-role,aws_iam_role.backend-role]
 }
 resource "aws_iam_role_policy_attachment" "attachment-subtitle-api-role-policy" {
   role       = aws_iam_role.subtitle-api-role.name

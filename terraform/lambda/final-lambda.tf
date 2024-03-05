@@ -20,7 +20,6 @@ resource "aws_lambda_function" "final-lambda" {
       "VIDEOS_TABLE" = module.dynamodb.videos-info
     }
   }
-  depends_on = [module.security]
 }
 
 #trigger for lambda
@@ -30,7 +29,6 @@ resource "aws_lambda_permission" "allow_bucket_input_final" {
   function_name = aws_lambda_function.final-lambda.function_name
   principal     = "s3.amazonaws.com"
   source_arn    = "arn:aws:s3:::${module.s3.polyglot-input-videos-bucket}"
-  depends_on = [aws_lambda_function.final-lambda]
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification-final-lambda" {
