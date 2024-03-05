@@ -17,6 +17,7 @@ resource "aws_lambda_function" "subtitles-lambda" {
       "SUBTITLE_API"     = "https://app.polyglotvision.online"
     }
   }
+  depends_on = [module.security]
 }
 
 resource "aws_lambda_permission" "allow_bucket_translation_subtitle" {
@@ -25,6 +26,7 @@ resource "aws_lambda_permission" "allow_bucket_translation_subtitle" {
   function_name = aws_lambda_function.subtitles-lambda.function_name
   principal     = "s3.amazonaws.com"
   source_arn    = "arn:aws:s3:::${module.s3.polyglot-translation-bucket}"
+  depends_on = [aws_lambda_function.subtitles-lambda]
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification_subtitles-lambda" {

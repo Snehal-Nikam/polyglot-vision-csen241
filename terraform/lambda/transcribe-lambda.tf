@@ -23,6 +23,7 @@ resource "aws_lambda_function" "transcribe-lambda" {
       "TRANSCRIBE_BUCKET" = module.s3.polyglot-transcribe-output-bucket
     }
   }
+  depends_on = [module.security]
 }
 
 #trigger for lambda
@@ -32,6 +33,7 @@ resource "aws_lambda_permission" "allow_bucket_input_transcribe" {
   function_name = aws_lambda_function.transcribe-lambda.function_name
   principal     = "s3.amazonaws.com"
   source_arn    = "arn:aws:s3:::${module.s3.polyglot-input-videos-bucket}"
+  depends_on = [aws_lambda_function.transcribe-lambda]
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification-transcribe-lambda" {
