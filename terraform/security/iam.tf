@@ -33,6 +33,11 @@ resource "aws_iam_role" "pre-signup-lambda-role" {
   name               = "pre-signup-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
+resource "aws_iam_role" "final-lambda-role" {
+  name               = "final-lambda-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+}
+
 
 resource "aws_iam_policy" "policy-backend-role" {
   name        = "policy-backend-role"
@@ -147,7 +152,37 @@ resource "aws_iam_policy" "policy-subtitles-lambda-role" {
     ]
   })
 }
-
+resource "aws_iam_policy" "policy-final-lambda-role" {
+  name        = "policy-final-lambda-role"
+  description = "A policy for final-lambda-role"
+  policy      = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action" : [
+          "s3:*",
+          "s3:Get*",
+          "s3:List*",
+          "s3:Describe*",
+          "s3-object-lambda:Get*",
+          "s3-object-lambda:List*",
+          "dynamodb:*"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "*"
+      },
+      {
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
+}
 resource "aws_iam_role_policy_attachment" "attachment-backend-role-policy" {
   role       = aws_iam_role.backend-role.name
   policy_arn = aws_iam_policy.policy-backend-role.arn
@@ -167,6 +202,10 @@ resource "aws_iam_role_policy_attachment" "attachment-translate-lambda-policy" {
 resource "aws_iam_role_policy_attachment" "attachment-subtitles-lambda-policy" {
   role       = aws_iam_role.subtitles-lambda-role.name
   policy_arn = aws_iam_policy.policy-subtitles-lambda-role.arn
+}
+resource "aws_iam_role_policy_attachment" "attachment-final-lambda-policy" {
+  role       = aws_iam_role.final-lambda-role.name
+  policy_arn = aws_iam_policy.policy-final-lambda-role.arn
 }
 
 

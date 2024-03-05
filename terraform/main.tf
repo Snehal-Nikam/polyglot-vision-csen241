@@ -15,4 +15,6 @@ module "lambda" {
   COGNITO_USR_POOL_ARN = ""
 }
 
-
+module "ec2" {
+  source = "./ec2"
+}
