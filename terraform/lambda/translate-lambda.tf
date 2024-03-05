@@ -10,6 +10,7 @@ resource "aws_lambda_function" "translate-lambda" {
   filename      = data.archive_file.translate-lambda.output_path
   runtime       = "python3.8"
   handler       = "translate.lambda_handler"
+  depends_on = [module.security]
   environment {
     variables = {
       "TRANSLATE_BUCKET" = module.s3.polyglot-translation-bucket
@@ -23,6 +24,7 @@ resource "aws_lambda_permission" "allow_bucket_translation_translate" {
   function_name = aws_lambda_function.translate-lambda.function_name
   principal     = "s3.amazonaws.com"
   source_arn    = "arn:aws:s3:::${module.s3.polyglot-transcribe-output-bucket}"
+  depends_on = [module.s3, aws_lambda_function.translate-lambda]
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification_translate-lambda" {
