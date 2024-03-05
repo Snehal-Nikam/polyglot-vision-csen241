@@ -15,9 +15,9 @@ s3_client = boto3.client('s3')
 
 if not os.path.exists('temp'):
     os.mkdir('./temp')
-    os.mkdir('./temp/hindi')
-    os.mkdir('./temp/english')
-    os.mkdir('./temp/original')
+    os.mkdir('./temp/language-hindi')
+    os.mkdir('./temp/language-english')
+    os.mkdir('./temp/original-video')
     os.mkdir('./temp/subtitled')
     os.mkdir("./temp/job-info")
 
@@ -50,7 +50,7 @@ def start_job(fileName, data, originalPath, subtitlePathHI, subtitlePathEN, outp
     with open('./temp/job-info/{}.json'.format(fileName), 'w') as outfile:
         json.dump(job_info, outfile)
 
-    store_file_to_s3(data['subtitled-video'], fileName, outputPath)
+    store_file_to_s3(data['subtitled_video'], fileName, outputPath)
     store_file_to_s3(data['job_info'], fileName, './temp/job-info/{}.json'.format(fileName))
 
 
@@ -74,7 +74,7 @@ def startProcessing():
         outputPath = './temp/subtitled/{}.mp4'.format(fileName)
 
         start_job(fileName, data, originalPath, subtitlePathHI, subtitlePathEN, outputPath)
-
+        return jsonify("Succesfully started job"), 201
     else:
         return jsonify(""), 400
 
