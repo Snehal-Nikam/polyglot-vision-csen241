@@ -184,6 +184,34 @@ resource "aws_iam_policy" "policy-final-lambda-role" {
     ]
   })
 }
+
+resource "aws_iam_policy" "policy-pre-signup-lambda-role" {
+  name        = "policy-pre-signup-lambda"
+  description = "A policy for pre signup lambda"
+  policy      = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action" : [
+          "cognito-idp:AdminCreateUser",
+          "cognito-idp:AdminUpdateUserAttributes",
+          "cognito-idp:AdminInitiateAuth",
+        ],
+        "Effect" : "Allow",
+        "Resource" : "*"
+      },
+      {
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
+}
 resource "aws_iam_role_policy_attachment" "attachment-backend-role-policy" {
   role       = aws_iam_role.backend-role.name
   policy_arn = aws_iam_policy.policy-backend-role.arn
@@ -208,10 +236,14 @@ resource "aws_iam_role_policy_attachment" "attachment-final-lambda-policy" {
   role       = aws_iam_role.final-lambda-role.name
   policy_arn = aws_iam_policy.policy-final-lambda-role.arn
 }
-
-
-resource "aws_iam_policy_attachment" "pre-signup-lambda-role" {
-  name       = "example_lambda_exec_policy_attach"
-  roles      = [aws_iam_role.pre-signup-lambda-role.name]
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+resource "aws_iam_role_policy_attachment" "attachment-pre-signup-lambda-policy" {
+  role       = aws_iam_role.pre-signup-lambda-role.name
+  policy_arn = aws_iam_policy.policy-pre-signup-lambda-role.arn
 }
+
+
+#resource "aws_iam_policy_attachment" "pre-signup-lambda-role" {
+#  name       = "example_lambda_exec_policy_attach"
+#  roles      = [aws_iam_role.pre-signup-lambda-role.name]
+#  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+#}
