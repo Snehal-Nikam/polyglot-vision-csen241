@@ -86,7 +86,7 @@ class video_subtitle( object ):
 
         final_clip = concatenate_videoclips(annotatedClips)
         final_clip.write_videofile(outputPath)
-        return {'videoId': fileName, 'duration': clip.duration, 'transcriptionWords': self.transcriptionWords,
+        return {'video_id': fileName, 'duration': clip.duration, 'transcriptionWords': self.transcriptionWords,
                 'translationWords': self.translationWords}
 
 
