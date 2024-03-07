@@ -24,7 +24,7 @@
 2. Give the lambda execution role the following permissions.
     AmazonEC2FullAccess 
     AmazonS3FullAccess
-3. Create a S3 trigger to translation bucket with language-hindi/ as prefix and .vtt as suffix.
+3. Create a S3 trigger to translation bucket with language-spanish/ as prefix and .vtt as suffix.
 4. Create the following Environment variables.
 5. TRANSLATE_BUCKET: polyglot-translation-bucket-cc241
 6. VIDEOS_BUCKET: polyglot-input-videos-bucket

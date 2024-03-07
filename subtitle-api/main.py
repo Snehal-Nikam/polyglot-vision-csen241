@@ -15,7 +15,7 @@ s3_client = boto3.client('s3')
 
 if not os.path.exists('temp'):
     os.mkdir('./temp')
-    os.mkdir('./temp/language-hindi')
+    os.mkdir('./temp/language-spanish')
     os.mkdir('./temp/language-english')
     os.mkdir('./temp/original-video')
     os.mkdir('./temp/subtitled')
