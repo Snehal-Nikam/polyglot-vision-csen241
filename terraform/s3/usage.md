@@ -12,4 +12,4 @@
 - This bucket will store the files used to subtitle the videos.
 - Folders: 
   * 'language-english' 
-  * 'language-hindi'
+  * 'language-spanish'
