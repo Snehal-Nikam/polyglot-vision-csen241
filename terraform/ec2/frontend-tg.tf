@@ -6,7 +6,7 @@ resource "aws_lb_target_group" "frontend-tg" {
     load_balancing_algorithm_type     = "round_robin"
     load_balancing_anomaly_mitigation = "off"
     load_balancing_cross_zone_enabled = "use_load_balancer_configuration"
-    port                              = 80
+    port                              = 4000
     protocol                          = "HTTP"
     protocol_version                  = "HTTP1"
     slow_start                        = 0

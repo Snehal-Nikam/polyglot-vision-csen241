@@ -6,7 +6,7 @@ resource "aws_lb_target_group" "worker-tg" {
     load_balancing_algorithm_type     = "round_robin"
     load_balancing_anomaly_mitigation = "off"
     load_balancing_cross_zone_enabled = "use_load_balancer_configuration"
-    port                              = 80
+    port                              = 8081
     protocol                          = "HTTP"
     protocol_version                  = "HTTP1"
     slow_start                        = 0
