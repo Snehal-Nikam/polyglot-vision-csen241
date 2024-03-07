@@ -83,7 +83,7 @@ def lambda_handler(event, _):
         result = translate_client.translate_text(
             Text=chunk,
             SourceLanguageCode='en',
-            TargetLanguageCode='hi'
+            TargetLanguageCode='es'
         )
         translated_chunks.append(result['TranslatedText'])
     translated_chunks = '\n'.join(translated_chunks)
@@ -93,7 +93,7 @@ def lambda_handler(event, _):
     base_file_name = os.path.splitext(os.path.basename(key))[0]
 
     s3_resource.Object(TRANSLATION_BUCKET, f'language-english/{base_file_name}.vtt').put(Body=vtt_content)
-    s3_resource.Object(TRANSLATION_BUCKET, f'language-hindi/{base_file_name}.vtt').put(Body=translated_chunks)
+    s3_resource.Object(TRANSLATION_BUCKET, f'language-spanish/{base_file_name}.vtt').put(Body=translated_chunks)
 
 
     return {

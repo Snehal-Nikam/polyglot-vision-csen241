@@ -28,8 +28,8 @@ def update_video_info_in_dynamo(video_id, video_uri, info, dynamo_client):
         ExpressionAttributeValues={
             ":u": {"S": str(video_uri)},
             ":d": {"N": str(info['duration'])},
-            ":t1": {"N": str(info['transcription_words'])},
-            ":t2": {"N": str(info['translation_words'])},
+            ":t1": {"N": str(info['transcriptionWords'])},
+            ":t2": {"N": str(info['translationWords'])},
             ':f': {"BOOL": True}
         },
         ExpressionAttributeNames={
@@ -67,7 +67,7 @@ def lambda_handler(event, context):
     if event:
         file_content, bucket_name, file_name = get_video_info_from_s3(event, s3_client)
         info = json.loads(file_content)
-        video_id = info['video_id']
+        video_id = info['videoId']
         video_key = f'/subtitled-video/{video_id}.mp4'
         video_uri = create_object_url(bucket_name, video_key)
         print("Uploading video info into dynamo db....", video_id)

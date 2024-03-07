@@ -10,7 +10,7 @@ def construct_paths(video_id):
     return {
         'original_video': f'{VIDEOS_BUCKET}/original-video/{video_id}.mp4',
         'transcription': f'{TRANSLATE_BUCKET}/language-english/{video_id}.vtt',
-        'translation': f'{TRANSLATE_BUCKET}/language-hindi/{video_id}.vtt',
+        'translation': f'{TRANSLATE_BUCKET}/language-spanish/{video_id}.vtt',
         'subtitled_video': f'{VIDEOS_BUCKET}/subtitled-video/{video_id}.mp4',
         'job_info': f'{VIDEOS_BUCKET}/info/{video_id}.json'
     }
@@ -19,7 +19,7 @@ def send_subtitle_request(data):
     url = f'{SUBTITLE_API}/video'
     headers = {
         'Content-Type': 'application/json; charset=utf-8',
-        'Content-Length': str(len(data))
+        'Content-Length': str(len(str(data)))
     }
     request_data = json.dumps(data).encode('utf-8')
     req = request.Request(url, data=request_data, headers=headers)
