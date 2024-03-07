@@ -13,8 +13,7 @@ resource "aws_autoscaling_group" "polyglot-asg" {
         vpc_zone_identifier       = [
         "subnet-0312f94b9d6f54145",
         "subnet-04fa228704b381244",
-        "subnet-0b93cd56b47f20650",
-        "subnet-0c9a7ad1a8241333f",
+        "subnet-0c9a7ad1a8241333f"
     ]
     instance_maintenance_policy {
         max_healthy_percentage = 110
@@ -36,26 +35,26 @@ resource "aws_autoscaling_group" "polyglot-asg" {
 
 resource "aws_launch_template" "ec2_fleet"{
     name = "polyglot-server-launch"
-    image_id = "ami-052c9ea013e6e3567"
+    image_id = "ami-0d524f780a6709055"
     key_name = "dev-us-west-2"
-    user_data = "${base64encode(data.template_file.init.rendered)}"
+    user_data = data.template_file.init.rendered
     instance_type = "t2.micro"
     vpc_security_group_ids = ["sg-0b421944945dcc241",]
     iam_instance_profile {
     name = "s3-cogni"
     }
 
-    block_device_mappings {
-        device_name = "/dev/xvda"
+    #block_device_mappings {
+    #    device_name = "/dev/xvda"
 
-        ebs {
-          volume_size = "20"
-        }
-      }
+    #    ebs {
+    #      volume_size = "20"
+    #    }
+    #  }
 }
 
 data "template_file" "init" {
-    template="${path.root}/ec2/userdata.tpl"
+    template=filebase64("${path.root}/ec2/userdata.tpl")
 }
 
 
