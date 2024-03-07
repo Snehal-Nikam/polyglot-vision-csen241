@@ -35,7 +35,7 @@ resource "aws_s3_bucket_notification" "bucket_notification_subtitles-lambda" {
   lambda_function {
     lambda_function_arn = aws_lambda_function.subtitles-lambda.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "language-hindi/"
+    filter_prefix       = "language-spanish/"
     filter_suffix       = ".vtt "
   }
   depends_on = [aws_lambda_function.subtitles-lambda, aws_lambda_permission.allow_bucket_translation_subtitle]
