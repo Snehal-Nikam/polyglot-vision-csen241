@@ -5,8 +5,8 @@ from subtitle import *
 import json
 import boto3
 
-__api_flask_host = os.environ.get('API_FLASK_HOST')
-__api_flask_port = os.environ.get('API_FLASK_PORT')
+__api_flask_host = os.environ.get('API_FLASK_HOST') if os.environ.get('API_FLASK_HOST') else '0.0.0.0'
+__api_flask_port = os.environ.get('API_FLASK_PORT') if os.environ.get('API_FLASK_PORT') else '8081'
 
 app = Flask(__name__)
 CORS(app)
@@ -15,7 +15,7 @@ s3_client = boto3.client('s3')
 
 if not os.path.exists('temp'):
     os.mkdir('./temp')
-    os.mkdir('./temp/language-hindi')
+    os.mkdir('./temp/language-spanish')
     os.mkdir('./temp/language-english')
     os.mkdir('./temp/original-video')
     os.mkdir('./temp/subtitled')
