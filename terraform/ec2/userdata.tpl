@@ -19,11 +19,6 @@ set -x
 #yarn global add cors
 
 git clone https://github.com/Snehal-Nikam/polyglot-vision-csen241 ~/polyglot-vision-csen241
-python3 /root/get_variables.py
-cp /root/backend.env ~/polyglot-vision-csen241/backend/.env
-cp /root/frontend.env ~/polyglot-vision-csen241/frontend/.env
-cp /root/subtitle.env ~/polyglot-vision-csen241/subtitle-api/.env
-
 cd ~/polyglot-vision-csen241/backend
 pip3 install -r requirements.txt
 
@@ -51,6 +46,10 @@ sudo pip3 install -r requirements.txt
 cd ~/polyglot-vision-csen241/frontend
 yarn
 yarn run lint --fix
+python3 /root/get_variables.py
+cp /root/backend.env ~/polyglot-vision-csen241/backend/.env
+cp /root/frontend.env ~/polyglot-vision-csen241/frontend/.env
+cp /root/subtitle.env ~/polyglot-vision-csen241/subtitle-api/.env
 quasar build
 
 ) 2>&1)  | logit

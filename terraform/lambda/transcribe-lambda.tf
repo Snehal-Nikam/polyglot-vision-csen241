@@ -36,15 +36,15 @@ resource "aws_lambda_permission" "allow_bucket_input_transcribe" {
   depends_on = [module.s3, aws_lambda_function.transcribe-lambda]
 }
 
-resource "aws_s3_bucket_notification" "bucket_notification-transcribe-lambda" {
-  bucket = module.s3.polyglot-input-videos-bucket
+#resource "aws_s3_bucket_notification" "bucket_notification-transcribe-lambda" {
+#  bucket = module.s3.polyglot-input-videos-bucket
 
-  lambda_function {
-    lambda_function_arn = aws_lambda_function.transcribe-lambda.arn
-    events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "original-video/"
-    filter_suffix       = ".mp4"
-  }
-  depends_on = [aws_lambda_function.transcribe-lambda, aws_lambda_permission.allow_bucket_input_transcribe]
-}
+#  lambda_function {
+#    lambda_function_arn = aws_lambda_function.transcribe-lambda.arn
+#    events              = ["s3:ObjectCreated:*"]
+#    filter_prefix       = "original-video/"
+#    filter_suffix       = ".mp4"
+#  }
+#  depends_on = [aws_lambda_function.transcribe-lambda, aws_lambda_permission.allow_bucket_input_transcribe]
+#}
 

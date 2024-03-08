@@ -24,6 +24,12 @@ module "cognito" {
   depends_on = [aws_lambda_function.pre-signup-lambda]
 }
 
+
+module "ec2" {
+  depends_on = [module.cognito]
+  source = "../ec2"
+}
+
 resource "aws_lambda_permission" "pre-signup-lambda-permission" {
   statement_id  = "AllowExecutionFromCognito"
   action        = "lambda:InvokeFunction"
