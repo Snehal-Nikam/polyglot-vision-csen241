@@ -52,12 +52,13 @@ resource "aws_cognito_user_pool" "polyglot" {
     default_email_option = "CONFIRM_WITH_CODE"
   }
 
-  lambda_config {
-    pre_sign_up = "arn:aws:lambda:us-west-2:${var.ACCOUNT_ID}:function:${var.AUTO_APPROVE_LAMBDA}"
-  }
+  #lambda_config {
+  #  pre_sign_up = "arn:aws:lambda:us-west-2:${var.ACCOUNT_ID}:function:${var.AUTO_APPROVE_LAMBDA}"
+  #}
 }
 
 resource "aws_cognito_user_pool_domain" "cognito_domain" {
   domain       = "polyglot"
   user_pool_id = aws_cognito_user_pool.polyglot.id
 }
+

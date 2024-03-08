@@ -35,10 +35,10 @@ resource "aws_autoscaling_group" "polyglot-asg" {
 
 resource "aws_launch_template" "ec2_fleet"{
     name = "polyglot-server-launch"
-    image_id = "ami-0d524f780a6709055"
+    image_id = "ami-01ed9daa979491694"
     key_name = "dev-us-west-2"
     user_data = data.template_file.init.rendered
-    instance_type = "t2.micro"
+    instance_type = "t2.large"
     vpc_security_group_ids = ["sg-0b421944945dcc241",]
     iam_instance_profile {
     name = "s3-cogni"
