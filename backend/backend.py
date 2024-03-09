@@ -59,7 +59,7 @@ def list_videos_from_user():
     records = get_records_by_key(VIDEOS_TABLE, 'user_id', user_id)
 
     video_list = []
-    print('record : '+records)
+    #print('record : '+records)
     if records:
         for record in records:
             info = dict()
