@@ -10,30 +10,35 @@
         :factory="uploadVideo"
         :filter="checkFileType"
         @rejected="onRejected"
-        color="grey"
-        text-color="black"
+        color="indigo-9"
+        text-color="white"
       />
     </div>
+    <div class="q-pa-md">
+      <q-table
+        :loading="loading"
+        class="q-mx-xl "
+        hide-pagination
+        title="My uploads"
+        :data="uploadsData"
+        :columns="columns"
+        row-key="name"
+        card-class="bg-white text-black"
+        table-class="text-black"
+        loading-label="Loading..."
+        no-results-label="No results found"
+        no-data-label="You haven't uploaded any files yet"
+      >
 
-    <q-table
-      :loading="loading"
-      class="q-mx-xl"
-      hide-pagination
-      title="My uploads"
-      :data="uploadsData"
-      :columns="columns"
-      row-key="name"
-      dark
-      loading-label="Loading..."
-      no-results-label="No results found"
-      no-data-label="You haven't uploaded any files yet"
-    >
-      <template v-slot:body-cell-download="props">
-        <q-td :props="props">
-          <q-btn :disable="!props.value" type="a" :href="props.value" round color="secondary" icon="cloud_download" />
-        </q-td>
-      </template>
-    </q-table>
+        <!--      table-class="bg-blue text-white"-->
+
+        <template v-slot:body-cell-download="props">
+          <q-td :props="props">
+            <q-btn :disable="!props.value" type="a" :href="props.value" round color="secondary" icon="cloud_download" />
+          </q-td>
+        </template>
+      </q-table>
+    </div>
   </q-page>
 </template>
 
@@ -140,4 +145,5 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 </style>

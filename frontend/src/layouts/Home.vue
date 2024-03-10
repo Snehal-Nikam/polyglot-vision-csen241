@@ -86,3 +86,11 @@ export default {
   }
 }
 </script>
+<style lang="stylus" scoped>
+.q-layout {
+  /*background-image: url("~assets/4.png");*/
+  background-color: #F6f4ea;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

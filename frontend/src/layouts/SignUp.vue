@@ -121,4 +121,10 @@ export default {
     width: 100%;
     height: 40px;
   }
+
+  .q-layout {
+    background-image: url("~assets/2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   </style>
