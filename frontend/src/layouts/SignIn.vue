@@ -5,14 +5,14 @@
           <img class="avatar" src="~assets/Polyglot.jpg" />
           <q-card-section>
             <q-form class="q-gutter-md q-pa-sm" @submit="login">
-              <q-input
+              <q-input rounded outlined
                 v-model="user.username"
                 label="Your email"
                 lazy-rules
                 :rules="[(val) => (val && val.length > 0) || 'Blank field']"
               />
 
-              <q-input
+              <q-input rounded outlined
                 type="password"
                 v-model="user.password"
                 label="Password"
@@ -25,7 +25,9 @@
                   :loading="loading"
                   label="To enter"
                   type="submit"
-                  color="primary"
+                  outline style="color: secondary;"
+                  rounded
+                  icon-right="send"
                 />
               </div>
 
