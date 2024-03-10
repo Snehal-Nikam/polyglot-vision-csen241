@@ -1,7 +1,7 @@
 <template>
     <q-layout view="lHh Lpr lFf">
       <q-header elevated>
-        <q-toolbar>
+        <q-toolbar class="bg-black text-white">
           <q-btn
             flat
             dense
@@ -9,11 +9,12 @@
             icon="menu"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
+          <img src="~assets/Polyglot.jpg" width="5%" height="50px">
           <q-toolbar-title>Welcome {{user.name}}</q-toolbar-title>
           <q-btn flat dense round icon="logout" @click="signOut"/>
         </q-toolbar>
       </q-header>
-  
+
       <q-drawer
         v-model="leftDrawerOpen"
         bordered
@@ -42,46 +43,54 @@
       </q-page-container>
     </q-layout>
   </template>
-  
-  <script>
-  const menuList = [
-    {
-      icon: 'home',
-      label: 'Início'
-    }
-  ]
-  import FileUploader from '../function/FileUploader'
-  import authService from '../service/authService'
-  export default {
-    components: { FileUploader },
-    data () {
-      return {
-        leftDrawerOpen: false,
-        menuLinks: menuList,
-        activeIndex: 0,
-        user: {}
-      }
-    },
-    methods: {
-      setActive (idx) {
-        this.activeIndex = idx
-      },
-      async signOut () {
-        try {
-          await authService.signOut()
-          this.$router.push('/')
-        } catch (err) {
-          console.log(err)
-          this.$q.notify({
-            message: 'Error when exiting the application',
-            color: 'red'
-          })
-        }
-      }
-    },
-    async created () {
-      const { attributes: data } = await authService.getCurrentUser()
-      this.user = data
-    }
+
+<script>
+const menuList = [
+  {
+    icon: 'home',
+    label: 'Start'
   }
-  </script>
+]
+import FileUploader from '../function/FileUploader'
+import authService from '../service/authService'
+export default {
+  components: { FileUploader },
+  data () {
+    return {
+      leftDrawerOpen: false,
+      menuLinks: menuList,
+      activeIndex: 0,
+      user: {}
+    }
+  },
+  methods: {
+    setActive (idx) {
+      this.activeIndex = idx
+    },
+    async signOut () {
+      try {
+        await authService.signOut()
+        this.$router.push('/')
+      } catch (err) {
+        console.log(err)
+        this.$q.notify({
+          message: 'Error when exiting the application',
+          color: 'red'
+        })
+      }
+    }
+  },
+  async created () {
+    const { attributes: data } = await authService.getCurrentUser()
+    this.user = data
+  }
+}
+</script>
+<style lang="stylus" scoped>
+.q-layout {
+  /*background-image: url("~assets/4.png");*/
+  background-color: #F6f4ea;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

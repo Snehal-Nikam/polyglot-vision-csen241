@@ -2,33 +2,35 @@
     <q-layout view="lHh Lpr lFf">
       <div class="container">
         <q-card>
-          <img class="avatar" src="" />
+          <img class="avatar" src="~assets/Polyglot.jpg" />
           <q-card-section>
             <q-form class="q-gutter-md q-pa-sm" @submit="login">
-              <q-input
+              <q-input rounded outlined
                 v-model="user.username"
                 label="Your email"
                 lazy-rules
                 :rules="[(val) => (val && val.length > 0) || 'Blank field']"
               />
-  
-              <q-input
+
+              <q-input rounded outlined
                 type="password"
                 v-model="user.password"
                 label="Password"
                 lazy-rules
                 :rules="[(val) => (val && val.length > 0) || 'Blank field']"
               />
-  
+
               <div>
                 <q-btn
                   :loading="loading"
                   label="To enter"
                   type="submit"
-                  color="primary"
+                  outline style="color: secondary;"
+                  rounded
+                  icon-right="send"
                 />
               </div>
-  
+
               <div class="row justify-center">
                 <span
                   >Not registered?<span
@@ -45,38 +47,38 @@
       </div>
     </q-layout>
   </template>
-  
-  <script>
-  import authService from '../service/authService'
-  export default {
-    data () {
-      return {
-        user: {
-          password: '',
-          username: ''
-        },
-        loading: false
-      }
-    },
-    methods: {
-      async login () {
-        const { username, password } = this.user
-        try {
-          this.loading = true
-          await authService.signIn({ username, password })
-          this.$router.push('home')
-        } catch (err) {
-          this.$q.notify({
-            message: 'Incorrect email or password',
-            color: 'red'
-          })
-        } finally {
-          this.loading = false
-        }
+
+<script>
+import authService from '../service/authService'
+export default {
+  data () {
+    return {
+      user: {
+        password: '',
+        username: ''
+      },
+      loading: false
+    }
+  },
+  methods: {
+    async login () {
+      const { username, password } = this.user
+      try {
+        this.loading = true
+        await authService.signIn({ username, password })
+        this.$router.push('home')
+      } catch (err) {
+        this.$q.notify({
+          message: 'Incorrect email or password',
+          color: 'red'
+        })
+      } finally {
+        this.loading = false
       }
     }
   }
-  </script>
+}
+</script>
   <style lang="stylus" scoped>
   .container {
     display: flex;
@@ -103,17 +105,25 @@
   }
   .avatar {
     margin: 10px auto;
-    width: 100px;
-    height: 100px;
+    width: 70%;
+    height: 40%;
     border-radius: 50%;
   }
   .signUp {
     cursor: pointer;
     color: $primary;
+    /*color: #3371e3 !important;*/
     align-self: flex-end;
   }
   .q-btn {
     height: 40px;
     width: 100%;
   }
+
+  .q-layout {
+    background-image: url("~assets/2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
   </style>
