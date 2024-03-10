@@ -57,11 +57,13 @@ def list_videos_from_user():
         return jsonify("UserNotFound"), 401
 
     records = get_records_by_key(VIDEOS_TABLE, 'user_id', user_id)
+
     video_list = []
+    #print('record : '+records)
     if records:
         for record in records:
             info = dict()
-            for key, value in record.records():
+            for key, value in record.items():
                 info[key] = str(value)
             video_list.append(info)
     return jsonify(video_list), 200

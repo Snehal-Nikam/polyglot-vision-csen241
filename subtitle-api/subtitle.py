@@ -65,6 +65,34 @@ class video_subtitle( object ):
 
         return subtitledClip.set_duration(clip.duration)
 
+    def add_spanish_subtitle_to_video(self, clip, txtHI):
+        fontSize = clip.h * 0.05
+
+        numberOfWordsHi = len(txtHI.split())
+        self.translationWords += numberOfWordsHi
+
+        mult = 2  # For calculating the position of subtitle
+
+        if numberOfWordsHi > 9:
+            auxHI = txtHI.split()
+            auxHI.insert(8, "\n")
+
+            mult = 4
+
+            txtHI = " ".join(auxHI)
+
+        hindiTextClip = TextClip(
+            txtHI, font="Amiri-Bold", fontsize=fontSize, color="white"
+        )
+
+        hindiTextClip = hindiTextClip.on_color(
+            color=(20, 85, 33), col_opacity=0.8
+        ).set_pos(("center", clip.h - mult * (fontSize + 2)))
+
+        subtitledClip = CompositeVideoClip([clip, hindiTextClip])
+
+        return subtitledClip.set_duration(clip.duration)
+
     def create_subtitled_video(self, fileName, originalPath, subtitlePathHI, subtitlePathEN, outputPath):
         print('*** create subtitled video ***')
         clip = VideoFileClip(originalPath)
@@ -80,8 +108,8 @@ class video_subtitle( object ):
             if fromTime - i > 0:
                 annotatedClips.append(clip.subclip(i + 0.00001, fromTime - 0.00001))
 
-            annotatedClips.append(self.add_subtitle_to_video(clip.subclip(fromTime, toTime), txt_hi, txt_en))
-
+            #annotatedClips.append(self.add_subtitle_to_video(clip.subclip(fromTime, toTime), txt_hi, txt_en))
+            annotatedClips.append(self.add_spanish_subtitle_to_video(clip.subclip(fromTime, toTime), txt_hi))
             i = toTime
 
         final_clip = concatenate_videoclips(annotatedClips)
