@@ -55,8 +55,8 @@ cp /root/frontend.env ~/polyglot-vision-csen241/frontend/.env
 cp /root/subtitle.env ~/polyglot-vision-csen241/subtitle-api/.env
 quasar build
 
-docker run -itd --restart always -p 4000:4000 -v $PWD/.env:/app/.env --name fronend sourabhdeshmukh/polyglotvision-frontend:v1
-docker run -itd --restart always -p 8080:8080 -v $PWD/.env:/app/.env --name backend sourabhdeshmukh/polyglotvision-backend:v1
+docker run -itd --restart always -p 4000:4000 -v ~/polyglot-vision-csen241/backend/.env:/app/.env --name fronend sourabhdeshmukh/polyglotvision-frontend:v1
+docker run -itd --restart always -p 8080:8080 -v ~/polyglot-vision-csen241/backend/.env:/app/.env --name backend sourabhdeshmukh/polyglotvision-backend:v1
 
 cd ~/polyglot-vision-csen241/subtitle-api/
 python3 main.py

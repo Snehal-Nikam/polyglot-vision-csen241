@@ -17,7 +17,7 @@ resource "aws_lambda_function" "final-lambda" {
   depends_on = [module.security]
   environment {
     variables = {
-      "SOURCE_EMAIL" = "ssdeshmukh@scu.edu" #Needs to be updated
+      "SOURCE_EMAIL" = "info@support.polyglotvision.online" #Needs to be updated
       "VIDEOS_TABLE" = module.dynamodb.videos-info
     }
   }
