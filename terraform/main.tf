@@ -11,6 +11,6 @@ provider "aws" {
 }
 
 module "lambda" {
-  source = "./lambda"
+  source               = "./lambda"
   COGNITO_USR_POOL_ARN = ""
 }
