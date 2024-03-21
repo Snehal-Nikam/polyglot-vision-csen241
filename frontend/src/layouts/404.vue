@@ -4,11 +4,11 @@
         <div style="font-size: 30vh">
           404
         </div>
-  
+
         <div class="text-h2" style="opacity:.4">
             See, are you lost?
         </div>
-  
+
         <q-btn
           class="q-mt-xl"
           color="white"
@@ -21,9 +21,9 @@
       </div>
     </div>
   </template>
-  
-  <script>
-  export default {
-    name: '404'
-  }
-  </script>
+
+<script>
+export default {
+  name: '404'
+}
+</script>

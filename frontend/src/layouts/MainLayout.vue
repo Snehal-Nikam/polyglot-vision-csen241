@@ -13,7 +13,7 @@
           <q-btn flat dense round icon="logout" />
         </q-toolbar>
       </q-header>
-  
+
       <q-drawer
         v-model="leftDrawerOpen"
         show-if-above
@@ -43,37 +43,37 @@
       </q-page-container>
     </q-layout>
   </template>
-  
-  <script>
-  const menuList = [
-    {
-      icon: 'home',
-      label: 'Start'
-    },
-    {
-      icon: 'account_box',
-      label: 'Profile',
-      separator: true
-    },
-    {
-      icon: 'info',
-      label: 'About'
+
+<script>
+const menuList = [
+  {
+    icon: 'home',
+    label: 'Start'
+  },
+  {
+    icon: 'account_box',
+    label: 'Profile',
+    separator: true
+  },
+  {
+    icon: 'info',
+    label: 'About'
+  }
+]
+import FileUploader from '../function/FileUploader'
+export default {
+  components: { FileUploader },
+  data () {
+    return {
+      leftDrawerOpen: false,
+      menuLinks: menuList,
+      activeIndex: 0
     }
-  ]
-  import FileUploader from '../function/FileUploader'
-  export default {
-    components: { FileUploader },
-    data () {
-      return {
-        leftDrawerOpen: false,
-        menuLinks: menuList,
-        activeIndex: 0
-      }
-    },
-    methods: {
-      setActive (idx) {
-        this.activeIndex = idx
-      }
+  },
+  methods: {
+    setActive (idx) {
+      this.activeIndex = idx
     }
   }
-  </script>
+}
+</script>

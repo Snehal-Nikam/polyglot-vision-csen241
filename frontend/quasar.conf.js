@@ -10,10 +10,10 @@ module.exports = function () {
     ],
     extras: [
       'roboto-font',
-      'material-icons' 
+      'material-icons'
     ],
     build: {
-      vueRouterMode: 'hash', 
+      vueRouterMode: 'hash',
       env: {
         COGNITO_REGION: process.env.COGNITO_REGION || 'us-east-2',
         COGNITO_USER_POOL_ID: process.env.COGNITO_USER_POOL_ID,
@@ -33,16 +33,16 @@ module.exports = function () {
     },
     devServer: {
       before (app) {
-          const cors = require('cors')
-          app.use(cors())
+        const cors = require('cors')
+        app.use(cors())
       },
       https: false,
       port: 8080,
-      open: true 
+      open: true
     },
     framework: {
-      iconSet: 'material-icons', 
-      lang: 'en-us', 
+      iconSet: 'material-icons',
+      lang: 'en-us',
       importStrategy: 'auto',
       plugins: ['Notify'],
       config: {
@@ -61,8 +61,8 @@ module.exports = function () {
       pwa: false
     },
     pwa: {
-      workboxPluginMode: 'GenerateSW', 
-      workboxOptions: {}, 
+      workboxPluginMode: 'GenerateSW',
+      workboxOptions: {},
       manifest: {
         name: 'polyglotvision',
         short_name: 'polyglot',
@@ -106,7 +106,7 @@ module.exports = function () {
       hideSplashscreen: true
     },
     electron: {
-      bundler: 'packager', 
+      bundler: 'packager',
 
       packager: {
       },
